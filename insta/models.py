@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+import datetime as dt
 
 # Create your models here.
 
@@ -18,3 +20,30 @@ class Profile(models.Model):
     
     def __str__(self):
         return self.bio
+
+
+class Image(models.Model):
+    image = models.ImageField(upload_to = 'posts/')
+    image_name = models.CharField(max_length=60)
+    image_caption = models.CharField(max_length=300)
+    image_profile = models.ForeignKey(Profile,null = True,on_delete=models.CASCADE)
+    likes = models.ManyToManyField(User, related_name='likes', blank=True)
+    pub_date = models.DateField(auto_now_add=True)
+
+    @property
+    def total_likes(self):
+        return self.likes.count()
+
+    def save_image(self):
+        self.save()
+
+    @classmethod
+    def update_caption(cls,id,new_name,new_caption):
+        cls.objects.filter(id = id).update(image_name = new_name,image_caption = new_caption)
+
+    @classmethod
+    def delete_image(cls,id):
+        cls.objects.filter(id = id).delete()
+
+    def __str__(self):
+        return self.image_name
