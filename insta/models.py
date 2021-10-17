@@ -17,8 +17,8 @@ class Profile(models.Model):
         cls.objects.filter(id = id).delete()
 
     @classmethod
-    def update_profile(cls,id,new_photo,new_bio):
-        cls.objects.filter(id = id).update(profile_photo = new_photo,bio = new_bio)
+    def update_profile(cls,id,new_bio):
+        cls.objects.filter(id = id).update(bio = new_bio)
     
     def __str__(self):
         return self.bio
@@ -33,7 +33,7 @@ class Image(models.Model):
     pub_date = models.DateField(auto_now_add=True)
     comments = models.CharField(max_length=300,blank=True)
 
-    @property
+    
     def total_likes(self):
         return self.likes.count()
 
@@ -47,6 +47,9 @@ class Image(models.Model):
     @classmethod
     def delete_image(cls,id):
         cls.objects.filter(id = id).delete()
+
+    def get_image_by_id(self,id):
+        return self.objects.get(id=id)
 
     def __str__(self):
         return self.image_name
