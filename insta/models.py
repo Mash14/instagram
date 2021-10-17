@@ -41,15 +41,17 @@ class Image(models.Model):
         self.save()
 
     @classmethod
-    def update_caption(cls,id,new_name,new_caption):
-        cls.objects.filter(id = id).update(image_name = new_name,image_caption = new_caption)
+    def update_caption(cls,id,new_caption):
+        cls.objects.filter(id = id).update(image_caption = new_caption)
 
     @classmethod
     def delete_image(cls,id):
         cls.objects.filter(id = id).delete()
 
-    def get_image_by_id(self,id):
-        return self.objects.get(id=id)
+    @classmethod
+    def get_image_by_id(cls,id):
+        images = cls.objects.get(id = id)
+        return images
 
     def __str__(self):
         return self.image_name
