@@ -7,7 +7,7 @@ from .forms import NewPostForm
 # Create your views here.
 
 @login_required(login_url='/accounts/login/')
-def home(request):
+def home_page(request):
     photos = Image.objects.all()
 
     title = 'Home' 

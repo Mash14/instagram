@@ -1,12 +1,36 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>NavBar</title>
 </head>
 <body>
-    
+    <nav class="navbar navbar-light" style="background-color:white;border-bottom:grey;height:15vh;">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'imageIndex' %}"><img src="{% static 'img/instagram-logo.png' %}" style="height:8vh;margin-left:18vw;"></a>
+            </div>
+
+            <div class="col-sm-3 navbar-right">
+
+
+                <div class="col-sm-6 col-md-6">
+                    {% if user.is_authenticated %}     
+          
+                        <span><a href="{% url 'imageIndex' %}"><img src="{% static 'img/home.png' %}" style="height:10vh;margin-left:14vw;margin-top:2vh;"></a></span>
+                    
+                    {% else %}
+                        <ul style="list-style-type: none;">
+                            <li><a class="btn btn-default" href="/accounts/login" style="display: inline;float:left;margin-left:-5vw;margin-top:50%;">LOGIN</a></li>
+                            <li><a class="btn btn-default" href="/accounts/register" style="margin-left:10%;margin-top:-80%;">REGISTER</a></li>                   
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
 </body>
 </html>
