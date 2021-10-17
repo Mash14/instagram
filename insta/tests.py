@@ -37,6 +37,12 @@ class ProfileTestClass(TestCase):
         self.new_profile.refresh_from_db()
         self.assertEquals(self.new_profile.bio,'CR7')
 
+    def test_search_profile(self):
+        self.new_profile.save_profile()
+        username = 'mash'
+        searched_profiles = self.new_profile.search_profile(username)
+        self.assertTrue(len(searched_profiles)>0)
+
 class ImageTestClass(TestCase):
 
     def setUp(self):
