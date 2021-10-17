@@ -5,6 +5,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url('^$',views.home,name = 'imageIndex'),
+    url('^post$',views.post_image,name = 'new_posts')
 ]
 
 if settings.DEBUG:
