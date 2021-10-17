@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse,Http404,HttpResponseRedirect
 from .models import Image,Comment,Profile
-from .forms import NewPostForm
+from .forms import NewPostForm,NewCommentForm
 
 # Create your views here.
 
@@ -24,7 +24,7 @@ def post_image(request):
             image = form.save(commit=False)
             image.image_profile = userProfile
             image.save()
-            return redirect('/home')
+            return redirect('/')
     else:
         form = NewPostForm()
     return render(request, 'new_post.html', {'form':form})        
