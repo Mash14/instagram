@@ -80,3 +80,53 @@ class ImageTestClass(TestCase):
         search_image = self.new_image.get_image_by_id(self.new_image.id)
         searched_image = Image.objects.filter(id=self.new_image.id)
         self.assertTrue(searched_image,search_image)
+
+    def test_delete_image(self):
+        self.new_image.save_image()
+        self.new_image.delete_image(id = self.new_image.id)
+        images = Image.objects.all()
+        self.assertTrue(len(images) == 0)
+
+class CommentTestClass(TestCase):
+
+    def setUp(self):
+        self.user = User(username = 'mash', email = 'mash@gmail.com', password = 'test')
+        self.user.save()
+
+        self.new_profile = Profile(profile_photo = 'image3.jpg', bio = 'G.O.A.T',profile_user = self.user)
+        self.new_profile.save()
+
+        self.new_image = Image(image = 'image5.jpg',image_name = 'hitman',image_caption = 'Crown the King', image_profile = self.new_profile,comments = 'test comment')
+        self.new_image.save()
+
+        self.new_comment = Comment(comment = 'Test Comment',post = self.new_image,user = self.new_profile)
+        self.new_comment.save_comment()
+
+    def tearDown(self):
+        User.objects.all().delete()
+        Profile.objects.all().delete()
+        Image.objects.all().delete()
+        Comment.objects.all().delete()
+
+    def test_instance(self):
+        self.assertTrue(isinstance(self.new_comment,Comment))
+
+    def test_save_method(self):
+        self.new_comment.save_comment()
+        comments = Comment.objects.all()
+        self.assertTrue(len(comments) > 0)
+
+    def test_delete_comment(self):
+        self.new_comment.save_comment()
+        self.new_comment.delete_comment(id = self.new_comment.id)
+        comments = Comment.objects.all()
+        self.assertTrue(len(comments) == 0)
+
+    def test_update_method(self):
+        self.new_comment.save_comment()
+        comment_id = self.new_comment.id
+        Comment.update_comment(comment_id,'Just Balling as usual')
+        self.new_comment.refresh_from_db()
+        self.assertEquals(self.new_comment.comment,'Just Balling as usual')
+
+
