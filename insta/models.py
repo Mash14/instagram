@@ -7,6 +7,7 @@ import datetime as dt
 class Profile(models.Model):
     profile_photo = models.ImageField(upload_to = 'posts/', blank = True)
     bio = models.CharField(max_length=150)
+    profile_user = models.ForeignKey(User,on_delete=models.CASCADE,default = '')
 
     def save_profile(self):
         self.save()
@@ -30,6 +31,7 @@ class Image(models.Model):
     image_profile = models.ForeignKey(Profile,null = True,on_delete=models.CASCADE)
     likes = models.ManyToManyField(User, related_name='likes', blank=True)
     pub_date = models.DateField(auto_now_add=True)
+    comments = models.CharField(max_length=300,blank=True)
 
     @property
     def total_likes(self):
