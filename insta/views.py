@@ -79,4 +79,4 @@ def single_view(request,image_id):
         raise Http404()
 
     title = 'Image'
-    return render(request, 'gram/single.html', {'images':images,'comments':comments,'title':title})
+    return render(request, 'gram/single.html', {'image':images,'comments':comments,'title':title})

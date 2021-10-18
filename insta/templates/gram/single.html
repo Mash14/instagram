@@ -1,0 +1,21 @@
+{% extends 'gram/base.html' %}
+    
+{% block content %}
+{{block.super}}
+<div class="row">
+    <img src="{{image.image.url}}" class="img-responsive" alt="" width="100%">
+</div>
+
+<div class="row">
+    <h2 class="text-center"><strong>{{ image.image_name }}</strong> </h2>
+
+    <p class="text-center"> {{ image.image_caption }} </p>
+    <p class="text-center"> Location: {{ image.image_location}} </p>
+</div>
+
+{% for comment in comments %}
+<div class="row">
+    <p><strong>{{comment.user.profile_user}}:</strong> {{comment.comment}}</p>
+</div>
+{% endfor %}
+{% endblock %}
