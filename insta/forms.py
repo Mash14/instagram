@@ -10,3 +10,8 @@ class NewCommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         exclude = ['post','user','date']
+
+class NewProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        exclude = ['']

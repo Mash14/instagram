@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse,Http404,HttpResponseRedirect
 from .models import Image,Comment,Profile
-from .forms import NewPostForm,NewCommentForm
+from .forms import NewPostForm,NewCommentForm,NewProfileForm
 
 # Create your views here.
 
@@ -42,4 +42,19 @@ def post_image(request):
             return redirect('/')
     else:
         form = NewPostForm()
-    return render(request, 'new_post.html', {'form':form})        
+    return render(request, 'new_post.html', {'form':form})  
+
+@login_required(login_url='/accounts/login/')
+def update_profile(request):
+    current_user =  request.user 
+    if request.method == 'POST':
+        form = NewProfileForm(request.POST, request.FILES)
+        if form.is_valid():
+            profile = form.save(commit = False)
+            profile.image_profile = current_user
+            profile.save()
+
+    else:
+        form = NewProfileForm()
+    title = 'Update Profile'
+    return render(request, 'update_profile.html',{'form':form,'title':title})    
