@@ -10,6 +10,21 @@ from .forms import NewPostForm,NewCommentForm
 def home_page(request):
     photos = Image.objects.all()
 
+    current_user = request.user
+    userProfile = Profile.objects.filter(profile_user = current_user).first()
+    image = Image.objects.filter()
+    if request.method == 'POST':
+        form = NewCommentForm(request.POST, request.FILES)
+        if form.is_valid():
+            comments = form.save(commit=False)
+            image = Image.objects.filter(id=request.POST.get('post')).first()
+            comments.user = userProfile
+            comments.post = image
+            comments.save_comment()
+
+    else:
+        form = NewCommentForm()
+
     title = 'Home' 
     return render(request, 'gram/index.html',{"photos":photos,"title":title})
 
