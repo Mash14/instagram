@@ -57,4 +57,12 @@ def update_profile(request):
     else:
         form = NewProfileForm()
     title = 'Update Profile'
-    return render(request, 'update_profile.html',{'form':form,'title':title})    
+    return render(request, 'update_profile.html',{'form':form,'title':title}) 
+
+@login_required(login_url='/accounts/login/')
+def profile_page(request):
+    current_user =  request.user 
+    userProfile = Profile.objects.filter(profile_user = current_user).first()
+    photos = Image.objects.filter(image_profile = userProfile).all()
+
+    return render(request, 'gram/profile.html',{'userProfile':userProfile,'photos':photos})
