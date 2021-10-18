@@ -1,0 +1,33 @@
+{% load bootstrap3 %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% if title%}
+    <title>Instagram - {{title}}</title>
+    {% else %}
+    <title>Instagram</title>
+    {% endif %}
+    {% block styles %} 
+        {% bootstrap_css %}
+    {% endblock %}
+</head>
+<body>
+<div class="container">   
+    
+    <form  action="{%url 'update_profile' %}" method="post" enctype="multipart/form-data" style="width:30%;margin-left:30vw;">
+        {%csrf_token%}
+            
+        {% bootstrap_form form%}
+        <input type="submit" class="btn btn-success btn-lg" value="Post">
+    </form>
+</div>
+    {% block scripts %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        {% bootstrap_javascript %} 
+    {% endblock %}
+</body>
+</html>
