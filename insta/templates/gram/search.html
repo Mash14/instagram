@@ -1,0 +1,26 @@
+{% extends 'gram/base.html' %}
+{% load static %}
+
+{% block content %}
+{{block.super}}
+
+<div class="container">
+    <div class="row">
+        {% if username %}
+            <h2> Found {{username|length}} of searched username {{message}}</h2>
+        {% else %}
+            <h2>Found 0 profiles for the searched username</h2>
+            <h2>{{message}}</h2>
+        {% endif %}
+    </div>
+    <hr>
+    {% for profile in username %}
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{profile.profile_photo.url}}" class="img-responsive" alt="Image" height="400" width="400">
+            <p>{{profile.profile_user.username}}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
