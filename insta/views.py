@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse,Http404,HttpResponseRedirect
 from .models import Image,Comment,Profile
 from .forms import NewPostForm,NewCommentForm,NewProfileForm
-
+from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
 
 @login_required(login_url='/accounts/login/')
@@ -66,3 +66,17 @@ def profile_page(request):
     photos = Image.objects.filter(image_profile = userProfile).all()
 
     return render(request, 'gram/profile.html',{'userProfile':userProfile,'photos':photos})
+
+@login_required(login_url='/accounts/login/')
+def single_view(request,image_id):
+
+    images = Image.objects.get(id = image_id)
+
+    try:
+        comments = Comment.objects.filter(image_id = images.id).all()
+
+    except ObjectDoesNotExist:
+        raise Http404()
+
+    title = 'Image'
+    return render(request, 'gram/single.html', {'images':images,'comments':comments,'title':title})

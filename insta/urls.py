@@ -8,6 +8,7 @@ urlpatterns = [
     url('^post$',views.post_image,name = 'new_posts'),
     url('^profile/update/',views.update_profile,name = 'update_profile'),
     url('^profile/',views.profile_page,name = 'profile_page'),
+    url('^single/(?P<image_id>\d+)/$',views.single_view, name = 'single'),
 ]
 
 if settings.DEBUG:
