@@ -1,0 +1,43 @@
+body {
+    font-family: 'Roboto Mono', monospace;
+}
+
+.gram {
+    border: 1px solid #ccc;
+}
+  
+.gram:hover {
+    border: 1px solid #777;
+}
+  
+.gram img {
+    width: 100%;
+    height: auto;
+}
+  
+.desc {
+    padding: 15px;
+    text-align: center;
+}
+  
+* {
+    box-sizing: border-box;
+}
+  
+.responsive {
+    padding: 0 6px;
+    width: 24.99999%;
+}
+
+@media only screen and (max-width: 700px) {
+    .responsive {
+      width: 49.99999%;
+      margin: 6px 0;
+    }
+}
+  
+  @media only screen and (max-width: 500px) {
+    .responsive {
+      width: 100%;
+    }
+}
