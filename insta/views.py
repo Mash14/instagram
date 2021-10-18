@@ -4,6 +4,7 @@ from django.http import HttpResponse,Http404,HttpResponseRedirect
 from .models import Image,Comment,Profile
 from .forms import NewPostForm,NewCommentForm,NewProfileForm
 from django.core.exceptions import ObjectDoesNotExist
+
 # Create your views here.
 
 @login_required(login_url='/accounts/login/')
@@ -80,3 +81,16 @@ def single_view(request,image_id):
 
     title = 'Image'
     return render(request, 'gram/single.html', {'image':images,'comments':comments,'title':title})
+
+@login_required(login_url='/accounts/login/')
+def search_user(request):
+    if 'username' in request.GET and request.GET["username"]:
+        search_term = request.GET.get('username')
+        searched_profiles = Profile.search_profile(search_term)
+        message = f'{search_term}'
+
+        return render(request, 'gram/search.html', {'message':message, 'username':searched_profiles})
+
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'gram/search.html',{'message':message})

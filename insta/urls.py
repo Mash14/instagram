@@ -9,6 +9,7 @@ urlpatterns = [
     url('^profile/update/',views.update_profile,name = 'update_profile'),
     url('^profile/',views.profile_page,name = 'profile_page'),
     url('^single/(?P<image_id>\d+)/$',views.single_view, name = 'single'),
+    url('^search/', views.search_user, name = 'searched_profiles')
 ]
 
 if settings.DEBUG:
