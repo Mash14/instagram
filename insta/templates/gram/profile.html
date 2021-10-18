@@ -14,7 +14,7 @@
             </div>
         </div>
         {% for image in photos %}
-            <img src="{{image.image.url}}">
+            <img src="{{image.image.url}}" width="500" height="500" style="float: left;padding: 20px;">
         {% endfor %}
     </div>
 {% endblock %}

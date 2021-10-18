@@ -5,11 +5,13 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url('^$',views.home_page,name = 'imageIndex'),
+    url('signup/', views.signUp, name='signup'),
     url('^post$',views.post_image,name = 'new_posts'),
     url('^profile/update/',views.update_profile,name = 'update_profile'),
     url('^profile/',views.profile_page,name = 'profile_page'),
     url('^single/(?P<image_id>\d+)/$',views.single_view, name = 'single'),
-    url('^search/', views.search_user, name = 'searched_profiles')
+    url('^search/', views.search_user, name = 'searched_profiles'),
+    url('comment/<id>', views.comment, name='comment'),
 ]
 
 if settings.DEBUG:

@@ -1,11 +1,26 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse,Http404,HttpResponseRedirect
 from .models import Image,Comment,Profile
-from .forms import NewPostForm,NewCommentForm,NewProfileForm
+from .forms import SignUpForm,NewPostForm,NewCommentForm,NewProfileForm
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.models import User
 
 # Create your views here.
+
+def signUp(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = request.POST['username']
+            password = request.POST['password']
+            email = request.POST['email']
+            user = User.objects.create_user(username = username,email = email,password = password)
+        return HttpResponse('Thank you for registering with us')
+    else:
+        form = SignUpForm()
+    return render(request, 'registration/registration_form.html', {'form': form})
 
 @login_required(login_url='/accounts/login/')
 def home_page(request):
@@ -94,3 +109,23 @@ def search_user(request):
     else:
         message = "You haven't searched for any term"
         return render(request, 'gram/search.html',{'message':message})
+
+@login_required(login_url='/accounts/login/')
+def comment(request,id):
+    post_comment = Comment.objects.filter(post= id)
+    images = Image.objects.filter(id=id).all()
+    current_user = request.user
+    profile = Profile.objects.get(user = current_user)
+    image = get_object_or_404(Image, id=id)
+    if request.method == 'POST':
+        form = NewCommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit = False)
+            comment.post = image
+            comment.user = profile
+            comment.save()
+            return HttpResponseRedirect(request.path_info)
+    else:
+        form = NewCommentForm()
+
+    return render(request,'gram/comment.html',{"form":form,"images":images,"comments":post_comment})
