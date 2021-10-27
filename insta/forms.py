@@ -13,7 +13,7 @@ class SignUpForm(UserCreationForm):
 class NewPostForm(forms.ModelForm):
     class Meta:
         model = Image
-        exclude = ['image_profile','pub_date','likes','comments'] 
+        exclude = ['image_profile','pub_date','likes','comments','user'] 
 
 class NewCommentForm(forms.ModelForm):
     class Meta:

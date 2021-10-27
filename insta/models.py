@@ -37,6 +37,7 @@ class Image(models.Model):
     likes = models.ManyToManyField(User, related_name='likes', blank=True)
     pub_date = models.DateField(auto_now_add=True)
     comments = models.CharField(max_length=300,blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     
     def total_likes(self):

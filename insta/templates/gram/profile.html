@@ -13,8 +13,12 @@
                 <p>{{userProfile.bio}}</p>
             </div>
         </div>
+        {% if photos %}
+            <h2 class="text-center">{{user.username}}'s Posts</h2>
+        {% endif %}
         {% for image in photos %}
             <img src="{{image.image.url}}" width="500" height="500" style="float: left;padding: 20px;">
+            <!-- <p>{{image.image_name}}</p> -->
         {% endfor %}
     </div>
 {% endblock %}

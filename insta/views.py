@@ -53,7 +53,7 @@ def post_image(request):
         form = NewPostForm(request.POST, request.FILES)
         if form.is_valid():
             image = form.save(commit=False)
-            image.image_profile = userProfile
+            image.user = current_user
             image.save()
             return redirect('/')
     else:
@@ -67,8 +67,9 @@ def update_profile(request):
         form = NewProfileForm(request.POST, request.FILES)
         if form.is_valid():
             profile = form.save(commit = False)
-            profile.image_profile = current_user
+            profile.profile_user = current_user
             profile.save()
+            return redirect('profile_page')
 
     else:
         form = NewProfileForm()
@@ -79,7 +80,7 @@ def update_profile(request):
 def profile_page(request):
     current_user =  request.user 
     userProfile = Profile.objects.filter(profile_user = current_user).first()
-    photos = Image.objects.filter(image_profile = userProfile).all()
+    photos = Image.objects.filter(user = current_user).all()
 
     return render(request, 'gram/profile.html',{'userProfile':userProfile,'photos':photos})
 
