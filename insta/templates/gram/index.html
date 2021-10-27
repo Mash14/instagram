@@ -13,11 +13,12 @@
                 <div class="row">
                     <div class="responsive">
                         <div class="gram">
-                            <a href="#"><img src="{{image.image.url}}"  alt="Image" width="600" height="400"></a>
+                            <a href="{% url 'single_image' image.id %}"><img src="{{image.image.url}}"  alt="Image" width="600" height="400"></a>
                             <div class="desc">
-                                <h3><a href="#"> {{ image.image_name }} </a></h3>
+                                <h3><a href="{% url 'single_image' image.id %}"> {{ image.image_name }} </a></h3>
                                 <p><strong>{{image.user}}</strong> {{image.image_caption}}</p>
-                                <p><a href="#">Comment</a></p>
+                                <p><a href="{% url 'single_image' image.id %}">View Comments</a></p>
+                                <p><a href="{% url 'comment_page' %}">Add Comment</a></p>
                             </div>
                         </div>
                     </div>

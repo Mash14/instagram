@@ -25,24 +25,10 @@ def signUp(request):
 @login_required(login_url='/accounts/login/')
 def home_page(request):
     photos = Image.objects.all()
-
-    current_user = request.user
-    userProfile = Profile.objects.filter(profile_user = current_user).first()
-    image = Image.objects.filter()
-    if request.method == 'POST':
-        form = NewCommentForm(request.POST, request.FILES)
-        if form.is_valid():
-            comments = form.save(commit=False)
-            image = Image.objects.filter(id=request.POST.get('post')).first()
-            comments.user = userProfile
-            comments.post = image
-            comments.save_comment()
-
-    else:
-        form = NewCommentForm()
-
+    comment = Comment.objects.all()
+    
     title = 'Home' 
-    return render(request, 'gram/index.html',{"photos":photos,"title":title})
+    return render(request, 'gram/index.html',{"photos":photos,"title":title,'comment':comment})
 
 @login_required(login_url='/accounts/login/')
 def post_image(request):
@@ -85,12 +71,12 @@ def profile_page(request):
     return render(request, 'gram/profile.html',{'userProfile':userProfile,'photos':photos})
 
 @login_required(login_url='/accounts/login/')
-def single_view(request,image_id):
+def single_view(request,id):
 
-    images = Image.objects.get(id = image_id)
+    images = Image.objects.get(id=id)
 
     try:
-        comments = Comment.objects.filter(image_id = images.id).all()
+        comments = Comment.objects.filter(id = images.id).all()
 
     except ObjectDoesNotExist:
         raise Http404()
@@ -116,7 +102,7 @@ def comment(request,id):
     post_comment = Comment.objects.filter(post= id)
     images = Image.objects.filter(id=id).all()
     current_user = request.user
-    profile = Profile.objects.get(user = current_user)
+    profile = request.GET.get("profile")
     image = get_object_or_404(Image, id=id)
     if request.method == 'POST':
         form = NewCommentForm(request.POST)

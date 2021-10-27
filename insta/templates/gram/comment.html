@@ -18,8 +18,4 @@
             style="margin-top:14px; margin-left:-10px">Post comment</button>
     </div>
 </form>
-<h3>Comments</h3>
-{% for comment in comments %}
-<p><strong class="text-secondary">{{comment.user.user}}</strong> {{comment.comment}}</p>
-{% endfor %}
 {% endblock %}

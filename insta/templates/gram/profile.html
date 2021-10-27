@@ -17,7 +17,7 @@
             <h2 class="text-center">{{user.username}}'s Posts</h2>
         {% endif %}
         {% for image in photos %}
-            <img src="{{image.image.url}}" width="500" height="500" style="float: left;padding: 20px;">
+        <a href="{% url 'single_image' image.id %}"><img src="{{image.image.url}}" width="500" height="500" style="float: left;padding: 20px;"></a>
             <!-- <p>{{image.image_name}}</p> -->
         {% endfor %}
     </div>
