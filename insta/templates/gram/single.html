@@ -12,6 +12,16 @@
 
         <p class="text-center"> {{ image.image_caption }} </p>
         <p class="text-center"> Location: {{ image.image_location}} </p>
+        <form action="{% url 'like-post' %}" method="POST" >
+            {% csrf_token %}
+            <input type="hidden" name="post_id" value="{{image.id}}">
+            {% if user not in image.likes.all %}
+            <button class="btn btn-success" >like</button>
+            {% else %}
+            <button class="btn btn-primary" >unlike</button>
+            {%endif%}
+        </form>
+        <small style=" font-style: italic;text-align: center;">Likes: {{image.likes.all.count}}</small>
     </div>
     <h1 class="text-center">Comments</h1>
     {% if comments %}
@@ -19,10 +29,12 @@
     {% for comment in comments %}
     <div class="row">
         <p><strong>{{comment.user.profile_user}}:</strong> {{comment.comment}}</p>
+        <p><a href="#">Add Comment</a></p>
     </div>
     {% endfor %}
     {% else %}
     <p>No Comments Yet..</p>
+    <p><a href="#">Add Comment</a></p>
     {% endif %}
 </div>
 

@@ -11,7 +11,7 @@ urlpatterns = [
     url('^profile/',views.profile_page,name = 'profile_page'),
     url('single/(?P<id>\d+)',views.single_view, name = 'single_image'),
     url('^search/', views.search_user, name = 'searched_profiles'),
-    url('comment/<id>', views.comment, name='comment_page'),
+    url('^comment/<id>', views.comment_create, name='comment_page'),
     url('like/', views.like_post, name='like-post'),
 ]
 

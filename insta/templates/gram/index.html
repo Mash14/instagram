@@ -22,13 +22,13 @@
                                     {% if user not in image.likes.all %}
                                     <button class="btn btn-success" >like</button>
                                     {% else %}
-                                    <button class="btn btn-secondary" >unlike</button>
+                                    <button class="btn btn-primary" >unlike</button>
                                     {%endif%}
                                 </form>
                                 <small style=" font-style: italic;">{{image.likes.all.count}}</small>
                                 <p><strong>{{image.user}}</strong> {{image.image_caption}}</p>
                                 <p><a href="{% url 'single_image' image.id %}">View Comments</a></p>
-                                <p><a href="{% url 'comment_page' %}">Add Comment</a></p>
+                                <p><a href="#">Add Comment</a></p>
                             </div>
                         </div>
                     </div>

@@ -25,10 +25,10 @@ def signUp(request):
 @login_required(login_url='/accounts/login/')
 def home_page(request):
     photos = Image.objects.all()
-    comment = Comment.objects.all()
+    comments = Comment.objects.all()
     
     title = 'Home' 
-    return render(request, 'gram/index.html',{"photos":photos,"title":title,'comment':comment})
+    return render(request, 'gram/index.html',{"photos":photos,"title":title,'comments':comments})
 
 @login_required(login_url='/accounts/login/')
 def post_image(request):
@@ -98,7 +98,7 @@ def search_user(request):
         return render(request, 'gram/search.html',{'message':message})
 
 @login_required(login_url='/accounts/login/')
-def comment(request,id):
+def comment_create(request,id):
     post_comment = Comment.objects.filter(post= id)
     images = Image.objects.filter(id=id).all()
     current_user = request.user
