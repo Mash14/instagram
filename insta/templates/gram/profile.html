@@ -8,7 +8,7 @@
                 <img src="{{userProfile.profile_photo.url}}" class="img-responsive" alt="" width="500" height="500">
             </div>
             <div class="col-md-6">
-                <h3>{{user.username}}</h3>
+                <h3>{{user.username}} <a href="{%url 'update_profile'%}"><button class="btn btn-success">Edit Profile</button></h3></a><b</h3>
                 <h2>Bio:</h2>
                 <p>{{userProfile.bio}}</p>
             </div>

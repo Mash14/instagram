@@ -12,6 +12,7 @@
 
         <p class="text-center"> {{ image.image_caption }} </p>
         <p class="text-center"> Location: {{ image.image_location}} </p>
+        <p class="text-center">Posted on: {{ image.pub_date }} </p>
         <form action="{% url 'like-post' %}" method="POST" >
             {% csrf_token %}
             <input type="hidden" name="post_id" value="{{image.id}}">
