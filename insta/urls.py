@@ -12,6 +12,7 @@ urlpatterns = [
     url('single/(?P<id>\d+)',views.single_view, name = 'single_image'),
     url('^search/', views.search_user, name = 'searched_profiles'),
     url('comment/<id>', views.comment, name='comment_page'),
+    url('like/', views.like_post, name='like-post'),
 ]
 
 if settings.DEBUG:

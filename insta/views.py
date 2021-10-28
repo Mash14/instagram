@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse,Http404,HttpResponseRedirect
-from .models import Image,Comment,Profile
+from .models import Image,Comment,Profile,Like
 from .forms import SignUpForm,NewPostForm,NewCommentForm,NewProfileForm
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.models import User
@@ -116,3 +116,21 @@ def comment(request,id):
         form = NewCommentForm()
 
     return render(request,'gram/comment.html',{"form":form,"images":images,"comments":post_comment})
+
+def like_post(request):
+    user = request.user
+    if request.method == 'POST':
+        post_id = request.POST.get('post_id')
+        posted = Image.objects.get(id=post_id)
+        if user in posted.likes.all():
+            posted.likes.remove(user)
+        else:
+            posted.likes.add(user)
+        like, created = Like.objects.get_or_create(user=user, post_id = post_id)
+        if not created:
+            if like.value == 'Like':
+                like.value = 'Unlike'
+            else:
+                like.value = 'Like'
+        like.save()
+    return redirect('imageIndex')

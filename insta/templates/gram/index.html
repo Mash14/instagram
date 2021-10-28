@@ -16,6 +16,16 @@
                             <a href="{% url 'single_image' image.id %}"><img src="{{image.image.url}}"  alt="Image" width="600" height="400"></a>
                             <div class="desc">
                                 <h3><a href="{% url 'single_image' image.id %}"> {{ image.image_name }} </a></h3>
+                                <form action="{% url 'like-post' %}" method="POST" >
+                                    {% csrf_token %}
+                                    <input type="hidden" name="post_id" value="{{image.id}}">
+                                    {% if user not in image.likes.all %}
+                                    <button class="btn btn-success" >like</button>
+                                    {% else %}
+                                    <button class="btn btn-secondary" >unlike</button>
+                                    {%endif%}
+                                </form>
+                                <small style=" font-style: italic;">{{image.likes.all.count}}</small>
                                 <p><strong>{{image.user}}</strong> {{image.image_caption}}</p>
                                 <p><a href="{% url 'single_image' image.id %}">View Comments</a></p>
                                 <p><a href="{% url 'comment_page' %}">Add Comment</a></p>
